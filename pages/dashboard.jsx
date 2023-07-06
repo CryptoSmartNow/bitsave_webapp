@@ -6,6 +6,8 @@ import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 
+// note: supported currencies are ether(goerli), bnb(binance), and more to populate
+
 export default function Dashboard() {
   const [signer, setSigner] = useState('');
 
@@ -21,20 +23,34 @@ export default function Dashboard() {
     // // date function
     const currentDate = new Date();
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDate = currentDate.toLocaleDateString(undefined, options);   
+    const formattedDate = currentDate.toLocaleDateString(undefined, options);  
+    // const formattedDate = currentDate.valueOf() // need timestamp instead
 
     const [savingsName, setSavingsName] = useState('');
     const [depositAmount, setDepositAmount] = useState('');
     const [currency, setCurrency] = useState('bitcoin');
-    const startTime = formattedDate
+    const startTime = currentDate.valueOf();
     const [endTime, setEndTime] = useState('');
     const [penalty, setPenalty] = useState('2');
+    const [isSafeMode, setIsSafeMode] = useState(true)
 
-    const handleNext = () => {
+    const handleNext = async() => {
       // Perform input validation if needed
       const savingsTokenAddress = "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921"
+      console.log(signer)
       // Call the createSavings() function from the API
-      createSavings(signer, savingsTokenAddress, savingsName, depositAmount, endTime, startTime, penalty, isSafeMode);
+      const saving_result = await createSavings(
+        signer, 
+        savingsTokenAddress, 
+        savingsName, 
+        depositAmount, 
+        endTime, 
+        startTime, 
+        penalty, 
+        isSafeMode, // todo: need a state for this as well, users can choose if they want safe mode
+      );
+
+      console.log(saving_result)
   
       // Transition to the next modal
       // You can use state, a conditional rendering approach, or a modal library to handle modal transitions
@@ -219,7 +235,7 @@ export default function Dashboard() {
                     <div className={bit.dot} style={{ color: '#364D54' }}></div>
                     <h4 style={{ marginRight: '30px', color: '#B3B3B3' }}>Start:</h4>
                   </div>
-                  <input type="text" id="deposit-amount" placeholder={ startTime } readonly className={bit.textInput} />
+                  <input type="text" id="deposit-amount" placeholder={ formattedDate } readonly className={bit.textInput} />
                 </div>
 
                 <div className={bit.input_row}>
@@ -231,7 +247,7 @@ export default function Dashboard() {
                   //  id="deposit-amount"
                     placeholder=""
                     className={bit.textInput} 
-                    value={setEndTime}
+                    value={endTime}
                     onChange={(e) => setEndTime(e.target.value)} />
                 </div>
               </div>
