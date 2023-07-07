@@ -1,31 +1,37 @@
-import React, { useEffect } from 'react';
-import Web3 from 'web3';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Web3Modal from 'web3modal';
+import { ethers } from 'ethers';
 
 function Authenticate() {
+  const router = useRouter();
+  const [signer, setSigner] = useState(null);
+
   useEffect(() => {
     const connectToWallet = async () => {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          // Request access to the user's MetaMask accounts
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      try {
+        const web3Modal = new Web3Modal();
+        const provider = await web3Modal.connect();
+        const ethersProvider = new ethers.providers.Web3Provider(provider);
+        const signer = ethersProvider.getSigner();
+        setSigner(signer);
 
-          // Store the signer in local storage
-          localStorage.setItem('signer', accounts[0]);
-
-          // Redirect to the dashboard page on successful connection
-          if (accounts.length > 0) {
-            window.location.href = '/dashboard';
-          }
-        } catch (error) {
-          console.error('Error connecting to MetaMask:', error);
+        // Redirect to the dashboard page once the signer value is available
+        if (signer) {
+          router.push('/dashboard');
         }
-      } else {
-        console.error('MetaMask is not installed');
+      } catch (error) {
+        console.error('Error connecting to wallet:', error);
       }
     };
 
     connectToWallet();
-  }, []);
+  }, [router]);
+
+  useEffect(() => {
+    // Log the signer to the console
+    console.log('Signer:', signer);
+  }, [signer]);
 
   return (
     <div>

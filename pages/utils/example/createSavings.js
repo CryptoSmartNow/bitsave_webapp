@@ -29,7 +29,7 @@ export async function createSavings(
         )
 
         console.log(savingsResult)
-        return savingsResul
+        return savingsResult
     } catch (error) {
         console.log(error)
     }

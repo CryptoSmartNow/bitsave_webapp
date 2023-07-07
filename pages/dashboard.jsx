@@ -1,24 +1,19 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { useRouter } from 'next/router';
 import { createSavings } from '../pages/utils/example/createSavings'; 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
+import SignerContext from './signer';
 
 // note: supported currencies are ether(goerli), bnb(binance), and more to populate
 
 export default function Dashboard() {
-  const [signer, setSigner] = useState('');
+  const { signer } = useContext(SignerContext);
 
-  useEffect(() => {
-    // Retrieve the signer from local storage
-    const signerFromStorage = localStorage.getItem('signer');
-
-    if (signerFromStorage) {
-      setSigner(signerFromStorage);
-    }
-  }, []);
+  console.log('Signer:', signer);
 
     // // date function
     const currentDate = new Date();
@@ -28,7 +23,7 @@ export default function Dashboard() {
 
     const [savingsName, setSavingsName] = useState('');
     const [depositAmount, setDepositAmount] = useState('');
-    const [currency, setCurrency] = useState('bitcoin');
+    const [currency, setCurrency] = useState('');
     const startTime = currentDate.valueOf();
     const [endTime, setEndTime] = useState('');
     const [penalty, setPenalty] = useState('2');
@@ -37,7 +32,6 @@ export default function Dashboard() {
     const handleNext = async() => {
       // Perform input validation if needed
       const savingsTokenAddress = "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921"
-      console.log(signer)
       // Call the createSavings() function from the API
       const saving_result = await createSavings(
         signer, 
@@ -52,8 +46,6 @@ export default function Dashboard() {
 
       console.log(saving_result)
   
-      // Transition to the next modal
-      // You can use state, a conditional rendering approach, or a modal library to handle modal transitions
     }
 
   return (
@@ -68,7 +60,7 @@ export default function Dashboard() {
                 height={500}
                 alt="User DP"
               />
-              <span className={bit.text}>Hello Kelvin&nbsp;👋<br /><span className={bit.username}> {signer && <p>Connected: {signer}</p>}</span></span>
+              <span className={bit.text}>Hello Kelvin&nbsp;👋<br /><span className={bit.username}></span></span>
             </div>
             <div className={bit.item}>
               <div className={bit.hamburger_menu}>&#9776;</div>
