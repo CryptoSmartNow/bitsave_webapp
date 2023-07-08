@@ -1,6 +1,6 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
-const SignerContext = createContext(null);
+export const SignerContext = createContext(null);
 
 export const SignerProvider = ({ children }) => {
   const [signer, setSigner] = useState(null);
@@ -15,5 +15,3 @@ export const SignerProvider = ({ children }) => {
     </SignerContext.Provider>
   );
 };
-
-export default SignerContext;

@@ -6,9 +6,9 @@ import { createSavings } from '../pages/utils/example/createSavings';
 import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
-import SignerContext from './signer';
+import {SignerContext} from './signer';
 
-// note: supported currencies are ether(goerli), bnb(binance), and more to populate
+
 
 export default function Dashboard() {
   const { signer } = useContext(SignerContext);
