@@ -34,3 +34,8 @@ export function makePaymentTokenInstance(
         signer
     )
 }
+
+export {
+    makeChildContractInstance,
+    makePaymentTokenInstance
+}

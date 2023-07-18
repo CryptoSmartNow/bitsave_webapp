@@ -1,4 +1,5 @@
 import makeBitsaveInstance from "../BitsaveInstance";
+import approveAmount from "../approveAmount";
 import {getSavingParams} from "../params";
 
 export async function createSavings(
@@ -15,10 +16,14 @@ export async function createSavings(
     const BitsaveInstance = makeBitsaveInstance(signer)
 
     try {
+        const parsedAmount = await approveAmount(
+            signer,
+            amountToSave
+        )
         const savingsResult = await BitsaveInstance
         .onCrossChainCall( // this is the function that will be called for all interactions
             savingsTokenAddress,
-            amountToSave,
+            parsedAmount,
             getSavingParams(
                 nameOfSaving,
                 endTime,
