@@ -24,7 +24,7 @@ export async function increaseSaving(
         )
 
         console.log(savingsIncResult)
-        return savingsIncResult
+        return savingsIncResult;
     } catch (error) {
         console.log(error)
     }
