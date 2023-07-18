@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 import {SignerContext} from './signer';
-
+import {useWalletClient} from "wagmi"
 
 
 export default function Dashboard() {
@@ -20,6 +20,12 @@ export default function Dashboard() {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const formattedDate = currentDate.toLocaleDateString(undefined, options);  
     // const formattedDate = currentDate.valueOf() // need timestamp instead
+  
+    async function tryGetSigner() {
+      const {data: signerFromWagmi, isError} = useWalletClient()
+      console.log(signerFromWagmi)
+    }
+    tryGetSigner()
 
     const [savingsName, setSavingsName] = useState('');
     const [depositAmount, setDepositAmount] = useState('');
