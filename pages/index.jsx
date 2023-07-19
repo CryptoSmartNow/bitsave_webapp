@@ -1,8 +1,11 @@
 import { Image } from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script'
+import MetaMask from './auth';
+
 
 export default function Home() {
+    
     return (
         <div>
             {/* <!-- Page-wrapper-Start --> */}
@@ -58,8 +61,8 @@ export default function Home() {
                                             <a className="nav-link" href="https://cryptosmartnow.io/contact">Contact</a>
                                         </li>
 
-                                        <li class="nav-item">
-                                            <Link href="/authenticate" className='nav-link dark_btn' />
+                                        <li className="nav-item">
+                                        <MetaMask />
                                         </li>
                                     </ul>
                                 </div>
@@ -93,9 +96,9 @@ export default function Home() {
                             <div className="banner_images" data-aos="fade-up" data-aos-duration="1500">
                                 <img src="/banner.png" alt="image" className="img-fluid" />
                                 <div className="sub_images">
-                                    <img className="moving_animation img-fluid" src="/banner1.png" alt="image"  style={{ height: '150px' }} />
-                                    <img className="moving_animation img-fluid" src="/banner2.png" alt="image"  style={{ height: '150px' }} />
-                                    <img className="moving_animation img-fluid" src="/banner3.png" alt="image"  style={{ height: '150px' }} />
+                                    <img className="moving_animation img-fluid" src="/banner1.png" alt="image" style={{ height: '150px' }} />
+                                    <img className="moving_animation img-fluid" src="/banner2.png" alt="image" style={{ height: '150px' }} />
+                                    <img className="moving_animation img-fluid" src="/banner3.png" alt="image" style={{ height: '150px' }} />
                                 </div>
                             </div>
                         </div>
@@ -421,6 +424,6 @@ export default function Home() {
             <Script src="/js/main.js" />
 
         </div >
-        
+
     )
 }

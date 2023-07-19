@@ -1,58 +1,94 @@
 'use client'
-import { useEffect, useState, useContext } from 'react';
+import { createSavings } from './utils/example/createSavings';
+import Web3 from 'web3';
+import { ethers } from 'ethers';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { createSavings } from '../pages/utils/example/createSavings'; 
-// import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
-import {SignerContext} from './signer';
-import {useWalletClient} from "wagmi"
 
 
 export default function Dashboard() {
-  const { signer } = useContext(SignerContext);
-
-  console.log('Signer:', signer);
-
-    // // date function
-    const currentDate = new Date();
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDate = currentDate.toLocaleDateString(undefined, options);  
-    // const formattedDate = currentDate.valueOf() // need timestamp instead
+  const router = useRouter();
+  const [signer, setSigner] = useState(null);
+  useEffect(() => {
+    const checkWalletConnection = async () => {
+      if (window.ethereum) {
+        try {
+          // Request access to MetaMask accounts
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const accountAddress = accounts[0]; // Get the first account address from MetaMask
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+          // Proceed to the dashboard
+          console.log('User is already connected to MetaMask');
+          console.log('Account Address:', accountAddress);
+          console.log(signer)
+          setSigner(signer);
+          router.push('/dashboard');
+        } catch (error) {
+          console.error('MetaMask error:', error);
+          // Redirect user to connect with MetaMask
+          // router.push('/dashboard');
+        }
+      } else {
+        console.error('MetaMask not found');
+        // Redirect user to connect with MetaMask
+        router.push('/');
+      }
+    };
   
-    async function tryGetSigner() {
-      const {data: signerFromWagmi, isError} = useWalletClient()
-      console.log(signerFromWagmi)
-    }
-    tryGetSigner()
+    checkWalletConnection();
+  }, []);
 
-    const [savingsName, setSavingsName] = useState('');
-    const [depositAmount, setDepositAmount] = useState('');
-    const [currency, setCurrency] = useState('');
-    const startTime = currentDate.valueOf();
-    const [endTime, setEndTime] = useState('');
-    const [penalty, setPenalty] = useState('2');
-    const [isSafeMode, setIsSafeMode] = useState(true)
+  const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
+          const nameOfSaving = 'Saving for rent';
+          const amountToSave = 100;
+          const endTime = 1656789000;
+          const startTime = 1656700000;
+          const penalty = 1;
+          const isSafeMode = false;
 
-    const handleNext = async() => {
-      // Perform input validation if needed
-      const savingsTokenAddress = "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921"
-      // Call the createSavings() function from the API
-      const saving_result = await createSavings(
-        signer, 
-        savingsTokenAddress, 
-        savingsName, 
-        depositAmount, 
-        endTime, 
-        startTime, 
-        penalty, 
-        isSafeMode, // todo: need a state for this as well, users can choose if they want safe mode
-      );
-
-      console.log(saving_result)
+          createSavings(
+            signer,
+            savingsTokenAddress,
+            nameOfSaving,
+            amountToSave,
+            endTime,
+            startTime,
+            penalty,
+            isSafeMode
+          );
   
-    }
+  // useEffect(() => {
+  //   const createSavingsAfterLoad = async () => {
+  //     if (signer) {
+  //       const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
+  //       const nameOfSaving = 'Saving for rent';
+  //       const amountToSave = 100;
+  //       const endTime = 1656789000;
+  //       const startTime = 1656700000;
+  //       const penalty = 0.1;
+  //       const isSafeMode = false;
+  
+  //       await createSavings(
+  //         signer,
+  //         savingsTokenAddress,
+  //         nameOfSaving,
+  //         amountToSave,
+  //         endTime,
+  //         startTime,
+  //         penalty,
+  //         isSafeMode
+  //       );
+  //     }
+  //   };
+  
+  //   createSavingsAfterLoad();
+  // }, [signer]);
+
+
 
   return (
     <section className={bit.containerMain}>
@@ -146,6 +182,7 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* 
         <div id="modalContainer" className={bit.modal_container}>
           <div className={bit.modal_content}>
             <div className={bit.modal_header}>
@@ -203,13 +240,13 @@ export default function Dashboard() {
               <button className={bit.next_button} id="nextModalButton">Next</button>
             </div>
 
-            {/* <!-- <button id="closeModalButton">Close</button> --> */}
+            <!-- <button id="closeModalButton">Close</button> --> 
           </div>
-        </div>
+        </div> */}
 
 
         {/* <!-- modal 2 --> */}
-        <div id="modal2" className={bit.savo}>
+        {/* <div id="modal2" className={bit.savo}>
           <div className={bit.savings_content}>
             <div className={bit.modal_header}>
               <h2>Step 02</h2>
@@ -276,11 +313,11 @@ export default function Dashboard() {
               </div>
 
             </div>
-          </div>
+          </div> */}
 
 
-          {/* <!-- modal 3 --> */}
-          <div id="modalContainer3" className={bit.modal_container}>
+        {/* <!-- modal 3 --> */}
+        {/* <div id="modalContainer3" className={bit.modal_container}>
             <div className={bit.modal_content}>
               <div className={bit.modal_header}>
                 <h2>Step 03</h2>
@@ -307,10 +344,10 @@ export default function Dashboard() {
                 <button className={bit.next_button} id="create_modal" onClick={handleNext}>Create</button>
               </div>
 
-              {/* <!-- <button id="closeModalButton">Close</button> --> */}
+               <!-- <button id="closeModalButton">Close</button> --> 
             </div>
-          </div>
-{/* 
+          </div> */}
+        {/* 
           <div id="final_modal" className={bit.final_container}>
             <div className={bit.final_content}>
               <div>
@@ -332,7 +369,7 @@ export default function Dashboard() {
           </div> */}
 
 
-          {/* <!-- <div className="bottom_tab_nav_container">
+        {/* <!-- <div className="bottom_tab_nav_container">
       <nav className="bottom_tab_nav">
         <ul className="tab_list">
           <li className="tab_item active">
@@ -344,14 +381,14 @@ export default function Dashboard() {
         </ul>
       </nav>
     </div> --> */}
-          <Script src="/js/bitsave.js" />
-    
-        </div>
-        </div>
+        <Script src="/js/bitsave.js" />
+
+      </div>
+      {/* </div> */}
     </section>
 
   )
 
-  }
+}
 
 
