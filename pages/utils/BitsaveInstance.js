@@ -9,7 +9,7 @@ export default function makeBitsaveInstance(
 ) {
     return new ethers.Contract(
         BS_CONSTANTS.BITSAVE_ADDRESS,
-        BitsaveABI,
+        BitsaveABI["abi"],
         signer
     )
 }
@@ -20,7 +20,7 @@ function makeChildContractInstance(
 ) {
     return new ethers.Contract(
         childAddress,
-        ChildContractABI,
+        ChildContractABI["abi"],
         signer
     )
 }
@@ -30,7 +30,7 @@ function makePaymentTokenInstance(
 ) {
     return new ethers.Contract(
         BS_CONSTANTS.PAYMENT_TOKEN_ADDRESS,
-        PaymentTokenABI,
+        PaymentTokenABI["abi"],
         signer
     )
 }

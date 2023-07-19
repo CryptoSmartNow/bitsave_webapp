@@ -14,6 +14,7 @@ export async function createSavings(
 ) {
 
     const BitsaveInstance = makeBitsaveInstance(signer)
+    console.log(BitsaveInstance)
 
     try {
         const parsedAmount = await approveAmount(
