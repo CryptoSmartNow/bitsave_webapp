@@ -14,7 +14,7 @@ export default function makeBitsaveInstance(
     )
 }
 
-export default function makeChildContractInstance(
+function makeChildContractInstance(
     signer,
     childAddress
 ) {
@@ -25,7 +25,7 @@ export default function makeChildContractInstance(
     )
 }
 
-export function makePaymentTokenInstance(
+function makePaymentTokenInstance(
     signer
 ) {
     return new ethers.Contract(
