@@ -10,25 +10,37 @@ export async function joinBitsave(
 ) {
 
     const BitsaveInstance = makeBitsaveInstance(signer)
-    const parsedJoiningFee = await approveAmount(
-        signer,
-        BS_CONSTANTS.JOINING_FEE
-    )
 
-    try {
-        const joiningResult = await BitsaveInstance
-        .onCrossChainCall( // this is the function that will be called for all interactions
-            BS_CONSTANTS.BITSAVE_ADDRESS,
-            parsedJoiningFee,
-            getJoinParams()
-        )
+    try{
+        const childAddress = await BitsaveInstance
+            .getUserChildContractAddress()
 
-        console.log(joiningResult)
-        return {
-            joiningResult,
+        console.log(childAddress)
+        if (childAddress && childAddress != ethers.constants.AddressZero) {
+            console.log("Child Address: ", childAddress)
+            return alert("Welcome back")
+        }else {
 
+            const parsedJoiningFee = await approveAmount(
+                signer,
+                BS_CONSTANTS.JOINING_FEE
+            )
+
+            const joiningResult = await BitsaveInstance
+            .onCrossChainCall( // this is the function that will be called for all interactions
+                BS_CONSTANTS.PAYMENT_TOKEN_ADDRESS,
+                parsedJoiningFee,
+                getJoinParams()
+            )
+    
+            console.log(joiningResult)
+            return {
+                joiningResult,
+    
+            }
         }
-    } catch (error) {
-        console.log(error)
+    } catch(err) {
+        console.log(err)
     }
+
 }

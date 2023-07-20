@@ -1,6 +1,6 @@
 
 import getUserChildContractAddress from "../getUserChildContractAddress"
-import {makeChildContractInstance} from "./BitsaveInstance"
+import {makeChildContractInstance} from "../BitsaveInstance"
 
 export default async function retrieveAllSavings(
     signer,

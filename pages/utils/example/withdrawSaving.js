@@ -12,7 +12,7 @@ export async function withdrawSaving(
     try {
         const withdrawResult = await BitsaveInstance
         .onCrossChainCall( // this is the function that will be called for all interactions
-            BS_CONSTANTS.BITSAVE_ADDRESS,
+            BS_CONSTANTS.PAYMENT_TOKEN_ADDRESS,
             0,
             getWithdrawParams(
                 nameOfSaving,

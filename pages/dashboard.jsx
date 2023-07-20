@@ -2,6 +2,7 @@
 import { joinBitsave } from './utils/example/joinBitsave';
 import { createSavings } from './utils/example/createSavings';
 import { increaseSaving } from './utils/example/incrementSaving';
+import retrieveAllSavings from "./utils/example/retrieveAllSavings"
 import { ethers } from 'ethers'; // Remove the Web3 import
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -13,6 +14,7 @@ export default function Dashboard({ router }) {
   const myrouter = useRouter();
   const [signer, setSigner] = useState(null);
   const [permissionRequested, setPermissionRequested] = useState(false);
+
 
   useEffect(() => {
     const checkWalletConnection = async () => {

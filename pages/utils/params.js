@@ -12,6 +12,7 @@ const makeOpcode = (opcode) => ethers.utils.toUtf8Bytes(opcode)
 
 function getJoinParams() {
     const paddedOpcode = makeOpcode(Opcodes.JOIN)
+    console.log("Reached here")
 
     return encodeParams(
         paramTypes,
