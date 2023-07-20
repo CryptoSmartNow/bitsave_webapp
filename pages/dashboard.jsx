@@ -10,7 +10,7 @@ import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 
 export default function Dashboard({ router }) {
-  const router = useRouter();
+  const myrouter = useRouter();
   const [signer, setSigner] = useState(null);
   const [permissionRequested, setPermissionRequested] = useState(false);
 
@@ -35,7 +35,7 @@ export default function Dashboard({ router }) {
             setSigner(signer);
             const join = await joinBitsave(signer)
             console.log(join)
-            router.push('/dashboard');
+            myrouter.push('/dashboard');
           }
         } catch (error) {
           console.error('MetaMask error:', error);
