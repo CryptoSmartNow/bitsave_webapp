@@ -28,9 +28,9 @@ export default function Home() {
                         <div className="container">
                             {/* <!-- navigation bar --> */}
                             <nav className="navbar navbar-expand-lg">
-                                <a className="navbar-brand" href="/">
+                                {/* <a className="navbar-brand" href="/">
                                     <img src="/bit1.png" alt="image" />
-                                </a>
+                                </a> */}
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon">
                                         <div className="toggle-wrap">
@@ -42,23 +42,23 @@ export default function Home() {
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav ml-auto">
                                         <li className="nav-item active">
-                                            <a className="nav-link" href="/">Home</a>
+                                            {/* <a className="nav-link" href="/">Home</a> */}
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="#protocol">Protocol</a>
+                                            {/* <a className="nav-link" href="#protocol">Protocol</a> */}
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="#hiw">How it works</a>
+                                            {/* <a className="nav-link" href="#hiw">How it works</a> */}
                                         </li>
                                         {/* <!-- secondery menu start --> */}
                                         <li className="nav-item">
-                                            <a className="nav-link" href="#team">Team</a>
+                                            {/* <a className="nav-link" href="#team">Team</a> */}
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="https://docs.google.com/document/d/11qa_KT4dhbrIQHY4ma8zgsYo-t-WwKdQV-Sf-RzHf54/edit?usp=sharing" target="_blank">One-pager</a>
+                                            {/* <a className="nav-link" href="https://docs.google.com/document/d/11qa_KT4dhbrIQHY4ma8zgsYo-t-WwKdQV-Sf-RzHf54/edit?usp=sharing" target="_blank">One-pager</a> */}
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="https://cryptosmartnow.io/contact">Contact</a>
+                                            {/* <a className="nav-link" href="https://cryptosmartnow.io/contact">Contact</a> */}
                                         </li>
 
                                         <li className="nav-item">
@@ -84,11 +84,11 @@ export default function Home() {
                                 </div>
                                 <div className="row container justify-content-center d-flex align-self-center my-2 text-center">
                                     <div className="btn_group col-lg-3 mb-3 text-center">
-                                        <a href="https://forms.gle/TgQm8DfRnsiPmpPt6" className="btn btn_main" data-aos="fade-right" data-aos-duration="1500">Join our waitlist <i className="fas fa-scroll"></i></a>
+                                        {/* <a href="https://forms.gle/TgQm8DfRnsiPmpPt6" className="btn btn_main" data-aos="fade-right" data-aos-duration="1500">Join our waitlist <i className="fas fa-scroll"></i></a> */}
                                     </div>
 
                                     <div className="btn_group col-lg-3 mb-3 text-center">
-                                        <a href="https://youtube.com/playlist?list=PLBVK_AKYV8sPvpV_bihIaAA0b2tsAHU5q" target="_blank" className="btn btn_main" data-aos="fade-right" data-aos-duration="1500">Watch Videos<i className="fas fa-play-circle"></i></a>
+                                        {/* <a href="https://youtube.com/playlist?list=PLBVK_AKYV8sPvpV_bihIaAA0b2tsAHU5q" target="_blank" className="btn btn_main" data-aos="fade-right" data-aos-duration="1500">Watch Videos<i className="fas fa-play-circle"></i></a> */}
                                     </div>
                                 </div>
 
@@ -328,7 +328,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="need_action">
-                                <a href="https://docs.google.com/document/d/11qa_KT4dhbrIQHY4ma8zgsYo-t-WwKdQV-Sf-RzHf54/edit?usp=sharing" className="btn">Read</a>
+                                {/* <a href="https://docs.google.com/document/d/11qa_KT4dhbrIQHY4ma8zgsYo-t-WwKdQV-Sf-RzHf54/edit?usp=sharing" className="btn">Read</a> */}
                             </div>
                         </div>
                     </div>
@@ -355,9 +355,9 @@ export default function Home() {
                                         <div className="links">
                                             <h3>Useful Links</h3>
                                             <ul>
-                                                <li><a href="/">Home</a></li>
-                                                <li><a href="#team">Team</a></li>
-                                                <li><a href="https://cryptosmartnow.io/blog">Blog</a></li>
+                                                {/* <li><a href="/">Home</a></li> */}
+                                                {/* <li><a href="#team">Team</a></li> */}
+                                                {/* <li><a href="https://cryptosmartnow.io/blog">Blog</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -367,9 +367,9 @@ export default function Home() {
                                         <div className="links">
                                             <h3>Help & Suport</h3>
                                             <ul>
-                                                <li><a href="https://cryptosmartnow.io/contact">Contact us</a></li>
-                                                <li><a href="#">FAQs</a></li>
-                                                <li><a href="#hiw">How it works</a></li>
+                                                {/* <li><a href="https://cryptosmartnow.io/contact">Contact us</a></li> */}
+                                                {/* <li><a href="#">FAQs</a></li> */}
+                                                {/* <li><a href="#hiw">How it works</a></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -394,15 +394,15 @@ export default function Home() {
                                 </div>
                                 <div className="col-md-4">
                                     <ul className="social_media">
-                                        <li><a href="https://youtube.com/channel/UC1cIpggpet2ut2KYN6_mV-Q"><i className="fab fa-youtube"></i></a></li>
+                                        {/* <li><a href="https://youtube.com/channel/UC1cIpggpet2ut2KYN6_mV-Q"><i className="fab fa-youtube"></i></a></li>
                                         <li><a href="https://twitter.com/cryptosmartnow"><i className="fab fa-twitter"></i></a></li>
                                         <li><a href="https://instagram.com/cryptosmartnow_"><i className="fab fa-instagram"></i></a></li>
-                                        <li><a href="https://www.linkedin.com/company/cryptosmartnow"><i className="fab fa-linkedin"></i></a></li>
+                                        <li><a href="https://www.linkedin.com/company/cryptosmartnow"><i className="fab fa-linkedin"></i></a></li> */}
 
                                     </ul>
                                 </div>
                                 <div className="col-md-4">
-                                    <p className="developer_text">Powered by <a href="https://cryptosmartnow.io" target="blank">CryptoSmart</a></p>
+                                    {/* <p className="developer_text">Powered by <a href="https://cryptosmartnow.io" target="blank">CryptoSmart</a></p> */}
                                 </div>
                             </div>
                             {/* <!-- row end --> */}

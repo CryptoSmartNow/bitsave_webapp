@@ -9,7 +9,7 @@ import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 
-export default function Dashboard() {
+export default function Dashboard({ router }) {
   const router = useRouter();
   const [signer, setSigner] = useState(null);
   const [permissionRequested, setPermissionRequested] = useState(false);
