@@ -1,32 +1,42 @@
 'use client'
+import { joinBitsave } from './utils/example/joinBitsave';
 import { createSavings } from './utils/example/createSavings';
-import Web3 from 'web3';
-import { ethers } from 'ethers';
+import { increaseSaving } from './utils/example/incrementSaving';
+import { ethers } from 'ethers'; // Remove the Web3 import
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 
-
 export default function Dashboard() {
   const router = useRouter();
   const [signer, setSigner] = useState(null);
+  const [permissionRequested, setPermissionRequested] = useState(false);
+
   useEffect(() => {
     const checkWalletConnection = async () => {
       if (window.ethereum) {
         try {
-          // Request access to MetaMask accounts
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const accountAddress = accounts[0]; // Get the first account address from MetaMask
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const signer = provider.getSigner();
-          // Proceed to the dashboard
-          console.log('User is already connected to MetaMask');
-          console.log('Account Address:', accountAddress);
-          console.log(signer)
-          setSigner(signer);
-          router.push('/dashboard');
+          if (!permissionRequested) {
+            setPermissionRequested(true);
+
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+
+            const accountAddress = accounts[0];
+            const provider = new ethers.providers.Web3Provider(window.ethereum, {
+              name: "ZetaChain Athens Testnet",
+              chainId: 7001
+            });
+            const signer = provider.getSigner();
+            console.log('User is already connected to MetaMask');
+            console.log('Account Address:', accountAddress);
+            console.log(signer);
+            setSigner(signer);
+            const join = await joinBitsave(signer)
+            console.log(join)
+            router.push('/dashboard');
+          }
         } catch (error) {
           console.error('MetaMask error:', error);
           // Redirect user to connect with MetaMask
@@ -38,28 +48,41 @@ export default function Dashboard() {
         router.push('/');
       }
     };
-  
+
     checkWalletConnection();
-  }, []);
+  }, [permissionRequested]);
 
-  const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
-          const nameOfSaving = 'Saving for rent';
-          const amountToSave = 100;
-          const endTime = 1656789000;
-          const startTime = 1656700000;
-          const penalty = 1;
-          const isSafeMode = false;
+  // const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
+  // const nameOfSaving = 'Saving for rent';
+  // const amountToIncrement = 1;
 
-          createSavings(
-            signer,
-            savingsTokenAddress,
-            nameOfSaving,
-            amountToSave,
-            endTime,
-            startTime,
-            penalty,
-            isSafeMode
-          );
+  // increaseSaving(
+  //   signer,
+  //   savingsTokenAddress,
+  //   nameOfSaving,
+  //   amountToIncrement
+  // );
+
+  // const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
+  //         const nameOfSaving = 'Saving for rent';
+  //         const amountToSave = 100;
+  //         const endTime = 1656789000;
+  //         const startTime = 1656700000;
+  //         const penalty = 1;
+  //         const isSafeMode = false;
+
+  //         createSavings(
+  //           signer,
+  //           savingsTokenAddress,
+  //           nameOfSaving,
+  //           amountToSave,
+  //           endTime,
+  //           startTime,
+  //           penalty,
+  //           isSafeMode
+  //         );
+
+ 
   
   // useEffect(() => {
   //   const createSavingsAfterLoad = async () => {
