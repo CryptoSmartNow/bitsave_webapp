@@ -11,7 +11,7 @@ export default async function approveAmount(
         const PaymentToken = makePaymentTokenInstance(signer);
 
         const parsedAmount = ethers.utils.parseUnits(
-            amount
+            amount?.toString()
         )
 
         await PaymentToken.approve(
