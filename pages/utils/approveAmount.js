@@ -8,16 +8,21 @@ export default async function approveAmount(
     amount
 ) {
     try {
+        if(!signer || !amount) return alert("Invalid details");
+        // todo: should throw instead
         const PaymentToken = makePaymentTokenInstance(signer);
 
-        const parsedAmount = ethers.utils.parseUnits(
-            amount?.toString()
+        const parsedAmount = ethers.utils.parseEther(
+            amount.toString()
         )
+        console.log("Amount--", parsedAmount)
 
         await PaymentToken.approve(
             BS_CONSTANTS.BITSAVE_ADDRESS,
             parsedAmount
         )
+
+        console.log("No error for approval")
 
         return parsedAmount
     }catch(error) {
