@@ -7,6 +7,7 @@ import ChildContractABI from "../artifacts/contracts/userContract.bitsave.sol/Us
 export default function makeBitsaveInstance(
     signer
 ) {
+    console.log("Reahced here:", signer)
     return new ethers.Contract(
         BS_CONSTANTS.BITSAVE_ADDRESS,
         BitsaveABI["abi"],

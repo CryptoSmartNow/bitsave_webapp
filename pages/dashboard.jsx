@@ -33,7 +33,7 @@ export default function Dashboard({ router }) {
               name: "ZetaChain Athens Testnet",
               chainId: 7001
             });
-            const signer = provider.getSigner();
+            const signer = await provider.getSigner();
             console.log('User is already connected to MetaMask');
             console.log('Account Address:', accountAddress);
             console.log(signer);

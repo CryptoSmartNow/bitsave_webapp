@@ -15,8 +15,9 @@ export async function joinBitsave(
         const childAddress = await BitsaveInstance
             .getUserChildContractAddress()
 
+            console.log("Hello world", childAddress)
         console.log(childAddress)
-        if (childAddress && childAddress != ethers.constants.AddressZero) {
+        if (childAddress && childAddress != ethers.ZeroAddress) {
             console.log("Child Address: ", childAddress)
             return alert("Welcome back")
         }else {

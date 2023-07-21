@@ -12,7 +12,7 @@ export default async function approveAmount(
         // todo: should throw instead
         const PaymentToken = makePaymentTokenInstance(signer);
 
-        const parsedAmount = ethers.utils.parseEther(
+        const parsedAmount = ethers.parseEther(
             amount.toString()
         )
         console.log("Amount--", parsedAmount)
