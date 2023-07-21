@@ -70,8 +70,8 @@ export default function Dashboard({ router }) {
 
 
     const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
-    // const nameOfSaving = setSavingsName(savingsName);
-    // const amountToSave = setDepositAmount(depositAmount);
+    const nameOfSaving = savingsName;
+    const amountToSave = depositAmount;
     const endTime = 1699292929200;
     const startTime = formattedDate;
     const penalty = 1;
@@ -82,8 +82,8 @@ export default function Dashboard({ router }) {
         createSavings(
           signer,
           savingsTokenAddress,
-          savingsName,
-          depositAmount,
+          nameOfSaving,
+          amountToSave,
           endTime,
           startTime,
           penalty,
