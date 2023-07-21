@@ -5,10 +5,11 @@ import Opcodes from "../utils/constants/Opcodes";
 const paramTypes = ["bytes", "string", "uint256", "uint256", "uint8", "bool"]
 
 const encodeParams = (dataTypes, data) => {
-    return ethers.utils.defaultAbiCoder.encode(dataTypes, data);
+    return ethers.AbiCoder.defaultAbiCoder().encode(dataTypes, data);
+    // return ethers.utils.defaultAbiCoder.encode(dataTypes, data);
 }
 
-const makeOpcode = (opcode) => ethers.utils.toUtf8Bytes(opcode)
+const makeOpcode = (opcode) => ethers.toUtf8Bytes(opcode)
 
 function getJoinParams() {
     const paddedOpcode = makeOpcode(Opcodes.JOIN)
