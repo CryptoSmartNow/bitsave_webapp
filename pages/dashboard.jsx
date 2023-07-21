@@ -3,7 +3,7 @@ import { joinBitsave } from './utils/example/joinBitsave';
 import { createSavings } from './utils/example/createSavings';
 import { increaseSaving } from './utils/example/incrementSaving';
 import retrieveAllSavings from "./utils/example/retrieveAllSavings"
-import { ethers } from 'ethers'; // Remove the Web3 import
+import { BrowserProvider } from 'ethers'; // Remove the Web3 import
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image'
@@ -11,6 +11,9 @@ import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
 
 export default function Dashboard({ router }) {
+  const [savingsName, setSavingsName] = useState("")
+  const [depositAmount, setDepositAmount] = useState("")
+  const formattedDate = Date.now();
   const myrouter = useRouter();
   const [signer, setSigner] = useState(null);
   const [permissionRequested, setPermissionRequested] = useState(false);
@@ -26,7 +29,7 @@ export default function Dashboard({ router }) {
             const accounts = await window.ethereum.request({ method: 'eth_accounts' });
 
             const accountAddress = accounts[0];
-            const provider = new ethers.providers.Web3Provider(window.ethereum, {
+            const provider = new BrowserProvider(window.ethereum, {
               name: "ZetaChain Athens Testnet",
               chainId: 7001
             });
@@ -65,24 +68,36 @@ export default function Dashboard({ router }) {
   //   amountToIncrement
   // );
 
-  // const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
-  //         const nameOfSaving = 'Saving for rent';
-  //         const amountToSave = 100;
-  //         const endTime = 1656789000;
-  //         const startTime = 1656700000;
-  //         const penalty = 1;
-  //         const isSafeMode = false;
 
-  //         createSavings(
-  //           signer,
-  //           savingsTokenAddress,
-  //           nameOfSaving,
-  //           amountToSave,
-  //           endTime,
-  //           startTime,
-  //           penalty,
-  //           isSafeMode
-  //         );
+    const savingsTokenAddress = '0x91d18e54DAf4F677cB28167158d6dd21F6aB3921';
+    // const nameOfSaving = setSavingsName(savingsName);
+    // const amountToSave = setDepositAmount(depositAmount);
+    const endTime = 1699292929200;
+    const startTime = formattedDate;
+    const penalty = 1;
+    const isSafeMode = false;
+  
+    const handleNext = async () => {
+      try {
+        createSavings(
+          signer,
+          savingsTokenAddress,
+          savingsName,
+          depositAmount,
+          endTime,
+          startTime,
+          penalty,
+          isSafeMode
+        );
+        console.log('Creating savings...');
+        // Add your createSavings logic here
+      } catch (error) {
+        console.error('Error creating savings:', error);
+      }
+
+    }
+  
+      
 
  
   
@@ -207,7 +222,7 @@ export default function Dashboard({ router }) {
           </div>
         </div>
 
-        {/* 
+        
         <div id="modalContainer" className={bit.modal_container}>
           <div className={bit.modal_content}>
             <div className={bit.modal_header}>
@@ -247,12 +262,9 @@ export default function Dashboard({ router }) {
                   <select
                   id="currency"
                   className={bit.currency_select}
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
+                  
                 >
-                      <option value="bitcoin">Algo</option>
-                      <option value="ethereum">USDT</option>
-                      <option value="litecoin">gAlgo</option>
+                      <option value="">geth</option>
                     </select>
                   </div>
 
@@ -265,13 +277,13 @@ export default function Dashboard({ router }) {
               <button className={bit.next_button} id="nextModalButton">Next</button>
             </div>
 
-            <!-- <button id="closeModalButton">Close</button> --> 
+            {/* <!-- <button id="closeModalButton">Close</button> -->  */}
           </div>
-        </div> */}
+        </div>
 
 
         {/* <!-- modal 2 --> */}
-        {/* <div id="modal2" className={bit.savo}>
+        <div id="modal2" className={bit.savo}>
           <div className={bit.savings_content}>
             <div className={bit.modal_header}>
               <h2>Step 02</h2>
@@ -307,8 +319,7 @@ export default function Dashboard({ router }) {
                   //  id="deposit-amount"
                     placeholder=""
                     className={bit.textInput} 
-                    value={endTime}
-                    onChange={(e) => setEndTime(e.target.value)} />
+                     />
                 </div>
               </div>
             </div>
@@ -338,11 +349,11 @@ export default function Dashboard({ router }) {
               </div>
 
             </div>
-          </div> */}
+          </div>
 
 
         {/* <!-- modal 3 --> */}
-        {/* <div id="modalContainer3" className={bit.modal_container}>
+        <div id="modalContainer3" className={bit.modal_container}>
             <div className={bit.modal_content}>
               <div className={bit.modal_header}>
                 <h2>Step 03</h2>
@@ -369,10 +380,10 @@ export default function Dashboard({ router }) {
                 <button className={bit.next_button} id="create_modal" onClick={handleNext}>Create</button>
               </div>
 
-               <!-- <button id="closeModalButton">Close</button> --> 
+               {/* <!-- <button id="closeModalButton">Close</button> -->  */}
             </div>
-          </div> */}
-        {/* 
+          </div>
+        
           <div id="final_modal" className={bit.final_container}>
             <div className={bit.final_content}>
               <div>
@@ -391,7 +402,7 @@ export default function Dashboard({ router }) {
                 <button className={bit.final_next_button} id="close_transaction">Close</button>
               </div>
             </div>
-          </div> */}
+          </div>
 
 
         {/* <!-- <div className="bottom_tab_nav_container">
@@ -409,7 +420,7 @@ export default function Dashboard({ router }) {
         <Script src="/js/bitsave.js" />
 
       </div>
-      {/* </div> */}
+      </div>
     </section>
 
   )

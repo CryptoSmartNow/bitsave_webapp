@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BrowserProvider } from 'ethers';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -17,7 +17,7 @@ const MetaMask = () => {
         // Check if MetaMask is connected to a provider
         if (window.ethereum?.isConnected()) {
           // Create an ethers.js provider using MetaMask
-          const provider = new ethers.providers.Web3Provider(window.ethereum, {
+          const provider = new BrowserProvider(window.ethereum, {
             name: "ZetaChain Athens Testnet",
             chainId: 7001
           });
