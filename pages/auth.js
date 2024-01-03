@@ -45,9 +45,11 @@ const MetaMask = () => {
   };
 
   return (
-    <button onClick={connectWallet} disabled={loading}>
-      {loading ? 'Connecting...' : 'Connect Wallet'}
-    </button>
+    <div className="">
+      <button className="btn btn_main" onClick={connectWallet} disabled={loading}>
+        {loading ? 'Connecting...' : 'Connect Wallet'} 
+      </button>
+    </div>
   );
 };
 

@@ -9,8 +9,50 @@ import { useRouter } from 'next/router';
 import Image from 'next/image'
 import Script from 'next/script'
 import bit from '../styles/bitdash.module.css'
+import DatePicker from 'react-modern-calendar-datepicker';
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar, utils } from "react-modern-calendar-datepicker";
 
 export default function Dashboard({ router }) {
+
+  const [selectedDayRange, setSelectedDayRange] = useState({
+    from: null,
+    to: null
+  });
+
+  const options = Array.from({ length: 12 }, (_, index) => index + 1);
+
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    return formattedDate;
+  };
+
+  // Function to get the current date and add months to it
+  const getFutureDate = (monthsToAdd) => {
+    const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() + monthsToAdd);
+    const futureDate = new Intl.DateTimeFormat('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(currentDate);
+    return futureDate;
+  };
+
+  const [selectedPenalty, setSelectedPenalty] = useState(1);
+
+  const handlePenaltyClick = (penaltyValue) => {
+    setSelectedPenalty(penaltyValue);
+  };
+
+
   const myrouter = useRouter();
   const [signer, setSigner] = useState(null);
   const [permissionRequested, setPermissionRequested] = useState(false);
@@ -84,8 +126,8 @@ export default function Dashboard({ router }) {
   //           isSafeMode
   //         );
 
- 
-  
+
+
   // useEffect(() => {
   //   const createSavingsAfterLoad = async () => {
   //     if (signer) {
@@ -96,7 +138,7 @@ export default function Dashboard({ router }) {
   //       const startTime = 1656700000;
   //       const penalty = 0.1;
   //       const isSafeMode = false;
-  
+
   //       await createSavings(
   //         signer,
   //         savingsTokenAddress,
@@ -109,7 +151,7 @@ export default function Dashboard({ router }) {
   //       );
   //     }
   //   };
-  
+
   //   createSavingsAfterLoad();
   // }, [signer]);
 
@@ -207,7 +249,7 @@ export default function Dashboard({ router }) {
           </div>
         </div>
 
-        {/* 
+
         <div id="modalContainer" className={bit.modal_container}>
           <div className={bit.modal_content}>
             <div className={bit.modal_header}>
@@ -225,31 +267,32 @@ export default function Dashboard({ router }) {
               <div className={bit.content}>
                 <div className={bit.header}>
                   <div className={bit.dot}></div>
-                  <h4>Savings Name and Amount</h4>
+                  <h4 className={bit.h4Class}>Savings Name and Amount</h4>
                 </div>
                 <input
-                    type="text"
-                    id="savings-name"
-                    placeholder="Name your savings plan"
-                    className={bit.textInput}
-                    value={savingsName}
-                    onChange={(e) => setSavingsName(e.target.value)}
-                  /> 
+                  type="text"
+                  id="savings-name"
+                  placeholder="Name your savings plan"
+                  className={bit.input_text}
+                // value={savingsName}
+                // onChange={(e) => setSavingsName(e.target.value)}
+                />
                 <div className={bit.input_row}>
-                <input
-                type="text"
-                id="deposit-amount"
-                placeholder="$000,000.00"
-                value={depositAmount}
-                onChange={(e) => setDepositAmount(e.target.value)}
-              />
+                  <input
+                    type="text"
+                    id="deposit-amount"
+                    placeholder="$000,000.00"
+                    className={bit.input_text}
+                  // value={depositAmount}
+                  // onChange={(e) => setDepositAmount(e.target.value)}
+                  />
                   <div className={bit.currency_dropdown}>
-                  <select
-                  id="currency"
-                  className={bit.currency_select}
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
+                    <select
+                      id="currency"
+                      className={bit.currency_select}
+                    // value={currency}
+                    // onChange={(e) => setCurrency(e.target.value)}
+                    >
                       <option value="bitcoin">Algo</option>
                       <option value="ethereum">USDT</option>
                       <option value="litecoin">gAlgo</option>
@@ -265,13 +308,13 @@ export default function Dashboard({ router }) {
               <button className={bit.next_button} id="nextModalButton">Next</button>
             </div>
 
-            <!-- <button id="closeModalButton">Close</button> --> 
+            {/* <!-- <button id="closeModalButton">Close</button> -->  */}
           </div>
-        </div> */}
+        </div>
 
 
         {/* <!-- modal 2 --> */}
-        {/* <div id="modal2" className={bit.savo}>
+        <div id="modal2" className={bit.savo}>
           <div className={bit.savings_content}>
             <div className={bit.modal_header}>
               <h2>Step 02</h2>
@@ -284,32 +327,16 @@ export default function Dashboard({ router }) {
                 <div className={bit.circle}>3</div>
               </div>
             </div>
-            <div className={bit.savings_duration}>
-              <div className={bit.content}>
-                <div className={bit.header}>
-                  <div className={bit.dot}></div>
-                  <h4>Savings Duration</h4>
-                </div>
-                <div className={bit.input_row}>
-                  <div className={bit.header}>
-                    <div className={bit.dot} style={{ color: '#364D54' }}></div>
-                    <h4 style={{ marginRight: '30px', color: '#B3B3B3' }}>Start:</h4>
-                  </div>
-                  <input type="text" id="deposit-amount" placeholder={ formattedDate } readonly className={bit.textInput} />
-                </div>
 
-                <div className={bit.input_row}>
-                  <div className={bit.header}>
-                    <div className={bit.dot}></div>
-                    <h4 style={{ marginRight: '30px', color: '#B3B3B3' }}>Stop:</h4>
-                  </div>
-                  <input type="text"
-                  //  id="deposit-amount"
-                    placeholder=""
-                    className={bit.textInput} 
-                    value={endTime}
-                    onChange={(e) => setEndTime(e.target.value)} />
-                </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  }}>
+              <div style={{ display: 'flex', margin: 'auto' }}>
+                <Calendar
+                  value={selectedDayRange}
+                  onChange={setSelectedDayRange}
+                  minimumDate={utils().getToday()}
+                  calendarClassName="responsive_calendar"
+                  shouldHighlightWeekends
+                />
               </div>
             </div>
 
@@ -323,13 +350,37 @@ export default function Dashboard({ router }) {
                 </div>
               </div>
               <div className={bit.penalty_row}>
-                <div className={`${bit.penalty} ${bit.active}`}>1%</div>
-                <div className={bit.penalty}>2%</div>
-                <div className={bit.penalty}>3%</div>
-                <div className={bit.penalty}>4%</div>
-                <div className={bit.penalty}>5%</div>
+                <div
+                  className={`${bit.penalty} ${selectedPenalty === 1 ? bit.active : ''}`}
+                  onClick={() => handlePenaltyClick(1)}
+                >
+                  1%
+                </div>
+                <div
+                  className={`${bit.penalty} ${selectedPenalty === 2 ? bit.active : ''}`}
+                  onClick={() => handlePenaltyClick(2)}
+                >
+                  2%
+                </div>
+                <div
+                  className={`${bit.penalty} ${selectedPenalty === 3 ? bit.active : ''}`}
+                  onClick={() => handlePenaltyClick(3)}
+                >
+                  3%
+                </div>
+                <div
+                  className={`${bit.penalty} ${selectedPenalty === 4 ? bit.active : ''}`}
+                  onClick={() => handlePenaltyClick(4)}
+                >
+                  4%
+                </div>
+                <div
+                  className={`${bit.penalty} ${selectedPenalty === 5 ? bit.active : ''}`}
+                  onClick={() => handlePenaltyClick(5)}
+                >
+                  5%
+                </div>
               </div>
-
 
 
               <div className={bit.button_row}>
@@ -338,11 +389,11 @@ export default function Dashboard({ router }) {
               </div>
 
             </div>
-          </div> */}
+          </div>
 
 
-        {/* <!-- modal 3 --> */}
-        {/* <div id="modalContainer3" className={bit.modal_container}>
+          {/* <!-- modal 3 --> */}
+          <div id="modalContainer3" className={bit.modal_container}>
             <div className={bit.modal_content}>
               <div className={bit.modal_header}>
                 <h2>Step 03</h2>
@@ -359,29 +410,29 @@ export default function Dashboard({ router }) {
                 <div className={bit.content}>
                   <div className={bit.header}>
                     <div className={bit.dot}></div>
-                    <h4>Preview</h4>
+                    <h4 className={bit.h4Class}>Preview</h4>
                   </div>
-                    <p>This ought to show the preview of your savings but i am just testing</p>
+                  <p>This ought to show the preview of your savings but i am just testing</p>
                 </div>
               </div>
               <div className={bit.button_row}>
                 <button className={bit.back_button} id="lastModalButton">Back</button>
-                <button className={bit.next_button} id="create_modal" onClick={handleNext}>Create</button>
+                <button className={bit.next_button} id="create_modal">Create</button>
               </div>
 
-               <!-- <button id="closeModalButton">Close</button> --> 
+              {/* <!-- <button id="closeModalButton">Close</button> -->  */}
             </div>
-          </div> */}
-        {/* 
+          </div>
+
           <div id="final_modal" className={bit.final_container}>
             <div className={bit.final_content}>
-              <div>
+              <div style={{ textAlign: 'center' }}>
                 <Image
                   src="/success.png"
-                  width={500}
-                  height={500}
+                  width={100}
+                  height={100}
                   alt="User DP"
-                  className='create_image' />
+                  className={bit.create_image} />
                 <h5 style={{ textAlign: 'center', color: '#364D54', fontStyle: 'normal', fontWeight: '900', fontSize: '18px' }}>
                   Transaction Successful</h5>
               </div>
@@ -391,10 +442,10 @@ export default function Dashboard({ router }) {
                 <button className={bit.final_next_button} id="close_transaction">Close</button>
               </div>
             </div>
-          </div> */}
+          </div>
 
 
-        {/* <!-- <div className="bottom_tab_nav_container">
+          {/* <!-- <div className="bottom_tab_nav_container">
       <nav className="bottom_tab_nav">
         <ul className="tab_list">
           <li className="tab_item active">
@@ -406,11 +457,15 @@ export default function Dashboard({ router }) {
         </ul>
       </nav>
     </div> --> */}
-        <Script src="/js/bitsave.js" />
 
+        </div>
       </div>
-      {/* </div> */}
+      <Script src="/js/bitsave.js" />
+      <Script src="/js/calendar.js" />
+
+
     </section>
+
 
   )
 

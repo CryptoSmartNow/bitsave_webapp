@@ -30,8 +30,9 @@ nextModalButton.addEventListener('click', () => {
 
 // modal 2 controls
 next_button.addEventListener('click', () => {
-  modal2.style.display = 'block';
   modalContainer3.style.display = 'flex'
+  modal2.style.display = 'none';
+
 });
 
 backModalButton.addEventListener('click', () => {
@@ -43,7 +44,7 @@ backModalButton.addEventListener('click', () => {
 // modal 3 controls
 lastModalButton.addEventListener('click', () => {
   modalContainer3.style.display = 'none'
-  modalContainer2.style.display = 'flex';
+  modal2.style.display = 'flex';
 })
 
 create_modal.addEventListener('click', () => {
