@@ -7,6 +7,11 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+
+        <script>
+          const global = globalThis
+
+        </script>
       </body>
     </Html>
   )

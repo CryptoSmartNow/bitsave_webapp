@@ -14,6 +14,7 @@ const close_transaction = document.getElementById('close_transaction');
 
 
 
+
 // modal 1 controls
 openModalButton.addEventListener('click', () => {
   modalContainer.style.display = 'flex';
