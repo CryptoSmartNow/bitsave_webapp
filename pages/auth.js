@@ -1,8 +1,9 @@
 import { ethers } from 'ethers';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useWallet } from "@txnlab/use-wallet";
 
-const MetaMask = () => {
+export default function MetaMask(){
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -53,4 +54,40 @@ const MetaMask = () => {
   );
 };
 
-export default MetaMask;
+;
+
+export function AlgorandWallet() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const { activeAccount,providers } = useWallet();
+  
+
+  const connectWallet =()=>{
+      setLoading(true);
+      const provider = providers[0]
+      
+      if (provider.isConnected) {
+          provider.disconnect().then(()=>{
+              setLoading(false);
+          })
+      } else {
+          provider.connect().then(()=>{
+              setLoading(false)
+              router.push('/dashboard');
+          });
+          provider.setActiveProvider();
+          
+      }
+      
+  }
+
+
+  return (
+      <>
+          <button className="btn btn_main" onClick={connectWallet} disabled={loading}>
+              {loading ? 'Connecting...' : activeAccount?.address? `${activeAccount.address.slice(0, 10)}.....` : 'Connect Wallet'} 
+          </button>
+      </>
+  )
+}
+

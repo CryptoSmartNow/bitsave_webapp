@@ -1,10 +1,22 @@
-import { Image } from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script'
-import MetaMask from './auth';
+import Script from 'next/script';
+import { useEffect } from 'react';
+import { Image } from 'next/image';
+import { useRouter } from 'next/router';
+import MetaMask,{AlgorandWallet} from './auth';
+import { useWallet } from "@txnlab/use-wallet";
+
 
 
 export default function Home() {
+    const router = useRouter();
+    const {activeAddress}  = useWallet();
+
+    useEffect(()=>{
+        if (activeAddress) {
+            router.push('/dashboard');
+        }
+    },[activeAddress])
     
     return (
         <div>
@@ -62,7 +74,8 @@ export default function Home() {
                                         </li>
 
                                         <li className="nav-item ">
-                                        <MetaMask />
+                                        {/* <MetaMask /> */}
+                                        <AlgorandWallet/>
                                         </li>
                                     </ul>
                                 </div>
